@@ -1,0 +1,812 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD Shyam Bayya!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #2c003e 0%, #a1005d 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            animation: float 3s ease-in-out infinite;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .active {
+            display: flex;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .heart {
+            color: #ff4d6d;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        .gif-container {
+            margin: 20px auto;
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: white;
+        }
+
+            .gif-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+        .btn {
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            /* THE FIX: This prevents the text from wrapping */
+            white-space: nowrap;
+            /* Ensures the button doesn't get squished */
+            min-width: fit-content;
+        }
+
+            .btn:hover {
+                background: white;
+                color: #a1005d;
+            }
+
+        .options-grid {
+            display: grid;
+            /* Changed to auto to let columns grow with the text */
+            grid-template-columns: auto auto;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center; /* Centers the buttons */
+        }
+
+        .letter-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        /* Grand Finale Styles - Combined Frame */
+        .media-frame {
+            width: 300px;
+            height: 300px;
+            border: 8px solid white;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            background: black;
+            position: relative;
+            animation: scaleUp 1s ease-out forwards;
+        }
+
+            .media-frame img, .media-frame video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: none;
+            }
+
+            .media-frame .visible {
+                display: block;
+            }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: gold;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .typing-wrapper {
+            display: inline-block;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .intro-line {
+            font-size: 1.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid transparent;
+            width: 0;
+            margin: 10px auto;
+        }
+
+        .line-1 {
+            animation: typing 2.5s steps(30) forwards, blink 1.5s step-end infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        .line-2 {
+            animation: typing 2.5s steps(40) forwards, blink 1.5s step-end infinite alternate;
+            animation-delay: 2.5s;
+        }
+
+        .line-3 {
+            animation: typing 2.5s steps(30) forwards, blink 1.5s step-end infinite alternate;
+            animation-delay: 5s;
+        }
+
+        .btn-intro {
+            opacity: 0;
+            animation: fadeInButton 1s ease-in forwards;
+            animation-delay: 7s;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+                border-right-color: #ff4d6d;
+            }
+
+            to {
+                width: 100%;
+                border-right-color: transparent;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        @keyframes fadeInButton {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body onload="startMusic()">
+    <audio id="bgMusic" loop>
+        <source src="Images/Puthu Mazha  Sarvam Maya.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="journeyMusic" loop>
+        <source src="Images/Ninnilaliyan mathram.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container">
+        <!--<div id="entry" class="section active">
+            <h1>Hey Handsome!!!! <span class="heart">❤️</span></h1>
+            <div class="gif-container"><img src="Images/peach-goma-love-smooch-kiss.gif"></div>
+            <div class="typing-wrapper">
+                <p class="intro-line line-1">Today isn’t just a date on the calendar... 📅✨</p>
+                <p class="intro-line line-2">It’s the day the universe got a lot more beautiful because of you 🥰🎈</p>
+                <p class="intro-line line-3">Ready to unwrap all the love I've tucked away for you? 🎁💖</p>
+            </div>
+            <button class="btn btn-intro" onclick="startTransition()">Unlock Your Birthday Journey</button>
+        </div>-->
+        <div id="entry" class="section active">
+            <h1>Hey Handsome!!!! <span class="heart">❤️</span></h1>
+
+            <div id="initial-question">
+                <div class="gif-container">
+                    <img src="Images/Handsome.jpeg">
+                    <!--<img src="Images/peach-goma-love-smooch-kiss.gif">-->
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">Are you ready for your surprise journey? 🥰</p>
+                <div class="options-grid" style="display: flex; justify-content: center;">
+                    <button class="btn" onclick="revealIntro()">YES! ❤️</button>
+                    <button class="btn" onclick="showCryState()">No... 🥺</button>
+                </div>
+            </div>
+
+            <div id="cry-state" style="display: none;">
+                <div class="gif-container">
+                    <img src="Images/bubu-crying-bubu-dudu.gif" alt="Crying">
+                </div>
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">Are you sure? 😭 My heart is breaking...</p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">If you change your mind, you can click Yes now! 👇</p>
+                <button class="btn" onclick="revealIntro()">YES, I'm ready! 😍</button>
+            </div>
+
+            <div id="intro-content" style="display: none;">
+                <div class="gif-container"><img src="Images/peach-goma-love-smooch-kiss.gif"></div>
+                <div class="typing-wrapper">
+                    <p class="intro-line line-1">Today isn’t just a date on the calendar... 📅✨</p>
+                    <p class="intro-line line-2">It’s the day fate quietly placed you in this world… and somehow in my life 💫❤️</p>
+                    <p class="intro-line line-3">Ready to unwrap all the love I've tucked away for you? 🎁💖</p>
+                </div>
+                <button id="unlock-btn" class="btn btn-intro" onclick="startTransition()">Unlock Your Birthday Journey 🔓💝</button>
+            </div>
+        </div>
+        <div id="transition" class="section">
+            <h1>Here we gooo! 🛵</h1>
+            <div class="gif-container"><img src="Images/d0e5451273c83ccf1abe71c366c08b63.gif"></div>
+        </div>
+
+        <div id="final" class="section">
+            <h1>Here we are! ✨</h1>
+            <div class="gif-container"><img src="Images/bubu-kiss-dudu-dudu-bubu.gif"></div>
+            <h2>I love you sooo much!</h2>
+            <button class="btn" onclick="showTask()">Go to Task 1</button>
+        </div>
+
+        <div id="task" class="section">
+            <h1>Task #1</h1>
+            <div class="gif-container"><img src="Images/X4NJqC.gif"></div>
+            <p>Babe, can you guess what day it is today?</p>
+            <div class="options-grid">
+                <button class="btn" onclick="wrongAnswer()">It is Shyam's Birthday</button>
+                <button class="btn" onclick="wrongAnswer()">International King Shyam Day 👑</button>
+                <button class="btn" onclick="correctAnswer()">My Dudu's Super-Duper Birthday-Day</button>
+                <button class="btn" onclick="wrongAnswer()">The day my Pookie was born-born</button>
+            </div>
+        </div>
+
+        <div id="success" class="section">
+            <h1>Correct!! 🎉</h1>
+            <div class="gif-container"><img src="Images/bubu-dudu-butt-bump-dance-ir9b4l440opi2b3d.gif"></div>
+            <p>You're doing great, birthday boy!</p>
+            <button class="btn" onclick="showTask2()">Next Task</button>
+        </div>
+
+        <div id="task2" class="section">
+            <h1>Task #2</h1>
+            <div class="gif-container"><img src="Images/kawaii-kawaii-cat.gif"></div>
+            <p style="font-size: 1.1rem;">In our future together, what matters most to you?</p>
+            <p id="lives-display" style="color: #ffccd5; font-weight: bold;">Chances remaining: 3</p>
+            <div class="options-grid">
+                <button class="btn" onclick="handleChoice2(false)">Winning every argument 😤</button>
+                <button class="btn" onclick="handleChoice2(true)">Growing together daily ❤️</button>
+                <button class="btn" onclick="handleChoice2(false)">Owning the TV remote 📺</button>
+                <button class="btn" onclick="handleChoice2(false)">Being perfect, not happy ✨</button>
+            </div>
+        </div>
+
+        <div id="lose" class="section">
+            <h1>Don't talk to me! 😠</h1>
+            <div class="gif-container"><img src="Images/7ed48246f79ad8d812e9241bf1e486be.gif"></div>
+            <button class="btn" onclick="resetTask2()">One last chance?</button>
+        </div>
+
+        <div id="success2" class="section">
+            <h1>Perfect Selection! ✨</h1>
+            <div class="gif-container"><img src="Images/bubu-dudu-butt-bump-dance-ir9b4l440opi2b3d.gif"></div>
+            <button class="btn" onclick="showTask3()">Next Task</button>
+        </div>
+
+        <div id="task3" class="section">
+            <h1>Task #3</h1>
+            <div class="gif-container"><img src="Images/love-languages.gif"></div>
+            <p>The way I show love most is by:</p>
+            <div class="options-grid">
+                <button class="btn" onclick="handleChoice3()">Staying up just for you ⏰</button>
+                <button class="btn" onclick="handleChoice3()">Non-stop Kisses</button>
+                <button class="btn" onclick="handleChoice3()">Listening to you</button>
+                <button class="btn" onclick="handleChoice3()">Annoying you ❤️</button>
+            </div>
+        </div>
+
+        <div id="success3" class="section">
+            <h1>Bubbuuuuuu! Yayyyy! My love is flying straight to you! 💖 ❤️</h1>
+            <div class="gif-container"><img src="Images/bubu-hearts-dudu.gif"></div>
+            <button class="btn" onclick="showTask4()">Next Task</button>
+        </div>
+
+        <div id="task4" class="section">
+            <h1>Task #4</h1>
+            <div class="gif-container"><img src="Images/marriage.jpg"></div>
+            <p>Marrying you means...</p>
+            <div class="options-grid">
+                <button class="btn" onclick="handleChoice4()">The happiest life ever</button>
+                <button class="btn" onclick="handleChoice4()">A lifetime of adventures</button>
+                <button class="btn" onclick="handleChoice4()">Being with my best friend</button>
+                <button class="btn" onclick="handleChoice4()">Endless love & support</button>
+            </div>
+        </div>
+
+        <div id="success4" class="section">
+            <h1 style="font-size: 1.5rem;">Our future is going to be a beautiful masterpiece, filled with every little moment... ✨</h1>
+            <div class="gif-container"><img id="futureGif" src="Images/fighting.gif"></div>
+            <p id="futureCaption" style="font-weight: bold; color: #ffccd5;">A little bit of fighting...</p>
+        </div>
+
+        <div id="task5" class="section">
+            <h1>Task #5</h1>
+            <div class="gif-container"><img src="Images/bubumissdudu.jpg"></div>
+            <p style="font-size: 1.2rem;">How much do you miss me?</p>
+            <div class="options-grid">
+                <button class="btn" onclick="handleChoice5()">A little bit</button>
+                <button class="btn" onclick="handleChoice5()">A whole lot</button>
+                <button class="btn" onclick="handleChoice5()">More than words</button>
+                <button class="btn" onclick="handleChoice5()">Every single second</button>
+            </div>
+        </div>
+
+        <div id="hugSection" class="section">
+            <h1>Soon! Like This! 🥺</h1>
+            <div class="gif-container"><img src="Images/loveusomuch.gif"></div>
+            <p style="padding: 10px;">I'm going to hug you exactly like this very soon. I miss you more than anything, and I can't wait to be in your arms again.</p>
+            <!--<button class="btn" onclick="showLetter()">Read My Heart ❤️</button>-->
+            <button class="btn" onclick="showJourney()">See Our Beautiful Future ✨</button>
+
+        </div>
+
+        <div id="loveLetter" class="section">
+            <h1>I love you so much! ❤️</h1>
+            <div class="letter-box">
+                <p>Haaaai Shyam Bayya,</p>
+                <p>Happy Birthday to the man who makes my heart skip a beat every single day. From our silly tasks to our biggest dreams, being with you is my favorite adventure.</p>
+                <p>Thank you for being my Dudu, my King, and my best friend. I love you more than words (or code!) could ever express. You are my home and my forever.</p>
+                <p>I know sometimes I irritate you, sometimes I hurt you, and sometimes I overreact also. 🥺 But that’s all because I love you so much and I feel so comfortable with you. 🥰✨</p>
+                <p>Thank you for always staying by my side. I can't wait for our beautiful future together. I love you forever! ❤️</p>
+                <p>Always yours,<br>❤️</p>
+            </div>
+            <button class="btn" onclick="triggerGrandFinale()">I Love You!</button>
+        </div>
+
+
+
+        <div id="grandFinale" class="section">
+            <h1>HAPPY BIRTHDAY SHYAM! 🎂❤️</h1>
+
+            <div class="media-frame">
+                <img id="slideshowImage" src="Images/wetogether.jpg" class="visible">
+                <video id="birthdayVideo" controls>
+                    <source src="Images/VideoOfShyam.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <h2 id="finalMessage" class="heart" style="margin-top: 20px; display:none;">I Love You Forever! ❤️</h2>
+            <!-- <button id="stopBtn" class="btn" style="display:none; margin-top:10px;" onclick="stopCelebration()">Stop Celebration 🛑</button>-->
+        </div>
+        <div id="valentineSection" class="section">
+            <div id="stalling-text">
+                <h1 class="heart">Wait wait wait don’t scroll!! 😭💞👉👈</h1>
+                <p style="font-size: 1.2rem; font-style: italic; padding: 15px; white-space: pre-line;">
+                    "Okay so like… hypothetically… if my heart had a Wi-Fi signal,
+                    it would automatically connect to you.
+                    And um… it’s been buffering this confession for a while now…
+                    so please don’t let it disconnect. 🥺📶💓"
+                </p>
+                <button class="btn" onclick="revealValentineQuestion()">What is it? 🥰</button>
+            </div>
+
+            <div id="actual-proposal" style="display: none; flex-direction: column; align-items: center;">
+                <div class="gif-container"><img src="Images/bubu-rose-bubu-sweet.gif"></div>
+                <h2 id="valentineQuestion">Will you be my Valentine, Shyam? 💖</h2>
+                <div id="valButtons" style="margin-top: 20px;">
+                    <button id="yesBtn" class="btn" style="background: #ff4d6d; position: relative; z-index: 10;" onclick="matchMade()">YES! ❤️</button>
+                    <button id="noBtn" class="btn" onmouseover="moveNo()" onclick="moveNo()">No... 🥺</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="finalGallery" class="section">
+            <h1>Happy Valentine's Day! 🌹</h1>
+            <div class="letter-box" style="max-height: 400px; max-width: 600px;">
+                <p>
+                    Happy Valentine’s Day, my love. Being apart from you isn’t easy, but it has taught me how strong our love really is.
+                    Even with the distance, you are in every thought, every prayer, and every beat of my heart.
+                    I miss you in the quiet moments, but I hold onto the comfort of knowing that this distance is only temporary and our forever is so close.
+                    No matter how far you are, you are my home, my peace, and my greatest love.
+                    I can’t wait for the day when distance is no longer part of our story ,only us❣️.
+                </p>
+            </div>
+            <!--<div class="media-frame" style="margin-top: 20px;">
+                <img id="galleryImg" src="Images/wetogether.jpg" class="visible">
+            </div>-->
+            <h2 class="heart" style="margin-top: 20px;">I Love You Forever & Miss You! 🥰✨</h2>
+        </div>
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+
+        function startMusic() {
+            music.play().catch(() => {
+                // This handles cases where the browser blocks autoplay
+                console.log("Waiting for user interaction to play music.");
+            });
+        }
+
+        let chances = 3;
+        let crackerInterval, particleInterval;
+
+        function startTransition() {
+            document.getElementById('entry').style.display = 'none';
+            document.getElementById('transition').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('transition').style.display = 'none';
+                document.getElementById('final').style.display = 'flex';
+            }, 3000);
+        }
+
+        function showTask() { document.getElementById('final').style.display = 'none'; document.getElementById('task').style.display = 'flex'; }
+        function showTask2() { document.getElementById('success').style.display = 'none'; document.getElementById('task2').style.display = 'flex'; }
+        function showTask3() { document.getElementById('success2').style.display = 'none'; document.getElementById('task3').style.display = 'flex'; }
+        function showTask4() { document.getElementById('success3').style.display = 'none'; document.getElementById('task4').style.display = 'flex'; }
+        function showLetter() { document.getElementById('hugSection').style.display = 'none'; document.getElementById('loveLetter').style.display = 'flex'; }
+
+        function wrongAnswer() { alert("Aww, no! Even though that's cute, it's not the right answer! Try again. 🤨"); }
+        function correctAnswer() { createParticlesother(); setTimeout(() => { document.getElementById('task').style.display = 'none'; document.getElementById('success').style.display = 'flex'; }, 2000); }
+
+        function handleChoice2(isCorrect) {
+            if (isCorrect) { createParticlesother(); setTimeout(() => { document.getElementById('task2').style.display = 'none'; document.getElementById('success2').style.display = 'flex'; }, 1000); }
+            else { chances--; document.getElementById('lives-display').innerText = "Chances remaining: " + chances; if (chances <= 0) { document.getElementById('task2').style.display = 'none'; document.getElementById('lose').style.display = 'flex'; } else { alert("Wrong choice! " + chances + " left!"); } }
+        }
+
+        function resetTask2() { chances = 3; document.getElementById('lives-display').innerText = "Chances remaining: 3"; document.getElementById('lose').style.display = 'none'; document.getElementById('task2').style.display = 'flex'; }
+        function handleChoice3() { createParticlesother(); setTimeout(() => { document.getElementById('task3').style.display = 'none'; document.getElementById('success3').style.display = 'flex'; }, 1000); }
+
+
+        //function handleChoice4() {
+        //    createParticlesother();
+        //    document.getElementById('task4').style.display = 'none';
+        //    document.getElementById('success4').style.display = 'flex';
+
+        //    // Play the Journey Song
+        //    const journeySong = document.getElementById('journeyMusic');
+        //    journeySong.play().catch(e => console.log("Interaction needed for audio"));
+
+        //    const futureImages = [
+        //        { src: "Images/fighting.gif", cap: "A little bit of fighting... 👊🥺" },
+        //        { src: "Images/food.gif", cap: "Lots of yummy food together... 🍕🤤" },
+        //        { src: "Images/cooking.jpg", cap: "Cooking our favorite meals... 🍳🥰" },
+        //        { src: "Images/dudu-bubu-dancing-so-cute.gif", cap: "Dancing through life... 💃🕺" },
+        //        { src: "Images/bubu-sleeping-dudu-touchgif.gif", cap: "Taking care of each other... 😴❤️" },
+        //        { src: "Images/konjing.gif", cap: "Infinite love and affection... ✨💖" }
+        //    ];
+
+        //    let i = 0;
+        //    const interval = setInterval(() => {
+        //        if (i < futureImages.length) {
+        //            document.getElementById('futureGif').src = futureImages[i].src;
+        //            document.getElementById('futureCaption').innerText = futureImages[i].cap;
+        //            i++;
+        //        } else {
+        //            clearInterval(interval);
+        //            // STOP Journey Song here as the journey sequence ends
+        //            journeySong.pause();
+        //            journeySong.currentTime = 0;
+        //            document.getElementById('success4').style.display = 'none';
+        //            document.getElementById('task5').style.display = 'flex';
+        //        }
+        //    }, 3500);
+        //}
+
+        function handleChoice4() {
+            createParticlesother();
+
+            // Hide Task 4
+            document.getElementById('task4').style.display = 'none';
+            //Wait 2 seconds before showing Task 5
+            setTimeout(() => {
+                document.getElementById('task5').style.display = 'flex';
+            }, 2000);
+
+        }
+        function handleChoice5() { createParticlesother(); setTimeout(() => { document.getElementById('task5').style.display = 'none'; document.getElementById('hugSection').style.display = 'flex'; }, 1000); }
+
+        /* GRAND FINALE LOGIC */
+        function triggerGrandFinale() {
+
+            // Hide letter and show finale section
+            document.getElementById('loveLetter').style.display = 'none';
+            document.getElementById('grandFinale').style.display = 'flex';
+
+            const slideshowImg = document.getElementById('slideshowImage');
+            const video = document.getElementById('birthdayVideo');
+            const finaleSong = document.getElementById('bgMusic');
+
+            const images = [
+                "Images/Handsome.jpeg",
+                "Images/wetogether.jpg",   // make sure extension matches exactly
+                "Images/ShyamShuttle.jpeg",
+                "Images/weairport.jpeg"
+            ];
+
+            // Reset display states
+            slideshowImg.style.display = 'block';
+            video.style.display = 'none';
+            video.pause();
+            video.currentTime = 0;
+
+            // Start music
+            finaleSong.play().catch(e => console.log("Music play blocked"));
+
+            // Start effects
+            crackerInterval = setInterval(() => { createCracker(); }, 400);
+            particleInterval = setInterval(() => { createParticles(5); }, 200);
+
+            // --- SLIDESHOW ---
+            let imgIndex = 0;
+            slideshowImg.src = images[0]; // show first image immediately
+
+            const photoInterval = setInterval(() => {
+
+                imgIndex++;
+
+                if (imgIndex < images.length) {
+                    slideshowImg.src = images[imgIndex];
+                } else {
+
+                    clearInterval(photoInterval);
+
+                    // Switch to video
+                    slideshowImg.style.display = 'none';
+                    video.style.display = 'block';
+
+                    video.playbackRate = 0.5; // slow motion
+                    video.muted = true;       // so bgMusic is heard
+                    video.play().catch(e => console.log("Video play blocked"));
+                }
+
+            }, 2500);
+
+            // Show final message after video ends
+            //video.onended = function () {
+            //    document.getElementById('finalMessage').style.display = 'block';
+            //};
+            // 1. Modify the video end trigger in triggerGrandFinale()
+            video.onended = function () {
+                setTimeout(() => {
+                    document.getElementById('grandFinale').style.display = 'none';
+                    document.getElementById('valentineSection').style.display = 'flex';
+                }, 1500);
+            };
+
+        }
+
+        // NEW: Valentine logic
+        function revealValentineQuestion() {
+            document.getElementById('stalling-text').style.display = 'none';
+            document.getElementById('actual-proposal').style.display = 'flex';
+        }
+
+        let yesScale = 1;
+        function moveNo() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+
+            // Move No Button
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            // Make Yes Button grow
+            yesScale += 0.5;
+            yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        function matchMade() {
+            document.getElementById('valentineSection').style.display = 'none';
+            document.getElementById('finalGallery').style.display = 'flex';
+
+            // Final photo cycle
+            //const galImages = ["Images/wetogether.jpg", "Images/Handsome.jpeg", "Images/weairport.jpeg"];
+            //let gIdx = 0;
+            //setInterval(() => {
+            //    gIdx = (gIdx + 1) % galImages.length;
+            //    document.getElementById('galleryImg').src = galImages[gIdx];
+            //}, 3000);
+        }
+
+        function stopCelebration() {
+            clearInterval(crackerInterval);
+            clearInterval(particleInterval);
+
+            const music = document.getElementById('bgMusic');
+            music.pause();
+
+            document.getElementById('stopBtn').innerText = "Celebration Paused!";
+        }
+
+        function createCracker() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            for (let i = 0; i < 15; i++) {
+                const c = document.createElement('div');
+                c.className = 'firework';
+                c.style.left = x + 'px';
+                c.style.top = y + 'px';
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 100 + 50;
+                c.animate([
+                    { transform: 'translate(0, 0)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`, opacity: 0 }
+                ], { duration: 800 + Math.random() * 400, easing: 'ease-out' });
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 1200);
+            }
+        }
+
+        function createParticles(num = 100) {
+            const colors = ['#ff4d6d', '#ffb3c1', '#ffffff', '#ffccd5', '#ffd700'];
+            for (let i = 0; i < num; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.top = '-20px';
+                p.style.color = colors[Math.floor(Math.random() * colors.length)];
+                p.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                p.style.animationDuration = Math.random() * 2 + 2 + 's';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 4000);
+            }
+        }
+
+        function createParticlesother() {
+            const colors = ['#ff4d6d', '#ffb3c1', '#ffffff', '#ffccd5'];
+            for (let i = 0; i < 100; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.top = '-10px';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                p.style.width = Math.random() * 10 + 5 + 'px';
+                p.style.height = p.style.width;
+                p.style.borderRadius = '50%';
+                p.style.animationDuration = Math.random() * 2 + 1 + 's';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 3000);
+            }
+        }
+        //Function to show the crying GIF if he clicks NO
+        function showCryState() {
+            // startMusic();
+            document.getElementById('initial-question').style.display = 'none';
+            document.getElementById('cry-state').style.display = 'block';
+        }
+
+        //Function to reveal the original intro and typing effect after clicking YES
+        function revealIntro() {
+            //startMusic();
+            document.getElementById('initial-question').style.display = 'none';
+            document.getElementById('cry-state').style.display = 'none';
+            document.getElementById('intro-content').style.display = 'block';
+
+            //Reset typing animation by re-triggering it
+            const lines = document.querySelectorAll('.intro-line');
+            lines.forEach(line => {
+                line.style.animation = 'none';
+                line.offsetHeight; /* trigger reflow */
+                line.style.animation = null;
+            });
+
+            //Reset button animation
+            const unlockBtn = document.getElementById('unlock-btn');
+            unlockBtn.style.animation = 'none';
+            unlockBtn.offsetHeight;
+            unlockBtn.style.animation = null;
+        }
+        function showJourney() {
+
+            document.getElementById('hugSection').style.display = 'none';
+            document.getElementById('success4').style.display = 'flex';
+
+            const journeySong = document.getElementById('journeyMusic');
+            journeySong.play().catch(e => console.log("Interaction needed for audio"));
+
+            const futureImages = [
+                { src: "Images/fighting.gif", cap: "A little bit of fighting... 👊🥺" },
+                { src: "Images/food.gif", cap: "Lots of yummy food together... 🍕🤤" },
+                { src: "Images/cooking.jpg", cap: "Cooking our favorite meals... 🍳🥰" },
+                { src: "Images/dudu-bubu-dancing-so-cute.gif", cap: "Dancing through life... 💃🕺" },
+                { src: "Images/bubu-sleeping-dudu-touchgif.gif", cap: "Taking care of each other... 😴❤️" },
+                { src: "Images/konjing.gif", cap: "Infinite love and affection... ✨💖" }
+            ];
+
+            let i = 0;
+
+            const interval = setInterval(() => {
+
+                if (i < futureImages.length) {
+                    document.getElementById('futureGif').src = futureImages[i].src;
+                    document.getElementById('futureCaption').innerText = futureImages[i].cap;
+                    i++;
+                } else {
+                    clearInterval(interval);
+
+                    // Stop music
+                    journeySong.pause();
+                    journeySong.currentTime = 0;
+
+                    // Go to Love Letter after journey
+                    document.getElementById('success4').style.display = 'none';
+                    document.getElementById('loveLetter').style.display = 'flex';
+                }
+
+            }, 3500);
+        }
+
+    </script>
+</body>
+</html>
